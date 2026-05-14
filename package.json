@@ -1,0 +1,10 @@
+{
+  "name": "assignment-wt",
+  "version": "1.0.0",
+  "scripts": {
+    "start": "serve ./public"
+  },
+  "devDependencies": {
+    "serve": "^14.2.4"
+  }
+}
