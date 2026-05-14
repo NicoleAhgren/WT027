@@ -83,10 +83,12 @@ export async function getTopChart(limit = 20) {
   const data = await query(`
     query($limit: Int) {
       topChart(limit: $limit) {
-        id
-        title
-        artist
-        totalStreams
+        position
+        song {
+          title
+          artist
+          totalStreams
+        }
       }
     }
   `, { limit })
