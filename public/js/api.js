@@ -25,6 +25,7 @@ export async function getSongs(page = 1, limit = 20, search = "") {
           title
           artist
           totalStreams
+          top10
           }
           totalPages
           currentPage

@@ -1,5 +1,6 @@
 import { fetchSongs } from '../models/songModel.js'
 import { renderSongs } from '../views/songsView.js'
+import { addSong } from '../models/playlistModel.js'
 
 export function initSongs() {
   let currentPage = 1
@@ -17,7 +18,9 @@ export function initSongs() {
         const songId = button.getAttribute('data-id')
         const songTitle = button.getAttribute('data-title')
         const songArtist = button.getAttribute('data-artist')
-        console.log('Add to playlist:', songTitle, songArtist, songId)
+        const songStreams = button.getAttribute('data-streams')
+
+        addSong({ id: songId, title: songTitle, artist: songArtist, totalStreams: songStreams })
       })
     })
   }

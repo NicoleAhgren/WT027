@@ -17,7 +17,7 @@ export function renderSongs(songs, totalPages, currentPage) {
       <p>${song.artist}</p>
       <p>${song.totalStreams} streams</p>
       <p>Top 10: ${song.top10 ?? 0}x</p>
-      <button class="add-btn" data-id="${song.id}" data-title="${song.title}" data-artist="${song.artist}">+</button>
+      <button class="add-btn" data-id="${song.id}" data-title="${song.title}" data-artist="${song.artist}" data-streams="${song.totalStreams}">+</button>
     `
     songsContainer.appendChild(songElement)
   })
