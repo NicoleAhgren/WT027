@@ -4,7 +4,7 @@ document.querySelector('#app').innerHTML = `
     <div id="chart-container">
       <canvas id="chart"></canvas>
     </div>
-    <div id="songDetail" style="display: none;">
+    <div id="song-detail" style="display: none;">
       <h2 id="detail-title"></h2>
       <p id="detail-artist"></p>
       <p id="detail-streams"></p>
@@ -47,12 +47,18 @@ const ctx = document.getElementById('chart').getContext('2d')
   })
 
   function showDetail(song) {
-    const panel = document.getElementById('songDetail')
+    const panel = document.getElementById('song-detail')
+    const btn = document.getElementById('detail-add-btn')
+    
     panel.style.display = 'block'
     document.getElementById('detail-title').textContent = song.title
     document.getElementById('detail-artist').textContent = song.artist
     document.getElementById('detail-streams').textContent = `Streams: ${song.totalStreams}`
     document.getElementById('detail-top10').textContent = `Top 10: ${song.top10 ?? 0}x`
     document.getElementById('detail-peak').textContent = `Peak position: ${song.peakPosition ?? '-'}`
+
+    btn.dataset.title = song.title
+    btn.dataset.artist = song.artist
+    btn.dataset.streams = song.totalStreams
   }
 }
