@@ -88,6 +88,9 @@ export async function getTopChart(limit = 20) {
           title
           artist
           totalStreams
+          peakPosition
+          top10
+          daysReleased
         }
       }
     }
