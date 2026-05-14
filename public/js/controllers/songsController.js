@@ -22,9 +22,17 @@ export function initSongs() {
     })
   }
 
-  document.addEventListener('input', (e) => {
-    if (e.target.id === 'search-input') {
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' && e.target.id === 'search-input') {
       currentSearch = e.target.value
+      currentPage = 1
+      load()
+    }
+  })
+
+  document.addEventListener('click', (e) => {
+    if (e.target.id === 'search-btn') {
+      currentSearch = document.querySelector('#search-input').value
       currentPage = 1
       load()
     }

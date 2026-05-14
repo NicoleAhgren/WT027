@@ -1,6 +1,9 @@
 export function renderSongs(songs, totalPages, currentPage) {
   document.querySelector('#app').innerHTML = `
-    <input type="text" id="search-input" placeholder="Search songs or artists...">
+    <div id="search-bar">
+      <input type="text" id="search-input" placeholder="Search songs or artists...">
+      <button id="search-btn">🔍</button>
+    </div>
     <div id="songs-container"></div>
     <div id="pagination-container"></div>
   `
@@ -13,7 +16,7 @@ export function renderSongs(songs, totalPages, currentPage) {
       <h3>${song.title}</h3>
       <p>${song.artist}</p>
       <p>${song.totalStreams} streams</p>
-      <p>Top 10: ${song.top10}x</p>
+      <p>Top 10: ${song.top10 ?? 0}x</p>
       <button class="add-btn" data-id="${song.id}" data-title="${song.title}" data-artist="${song.artist}">+</button>
     `
     songsContainer.appendChild(songElement)
@@ -22,18 +25,32 @@ export function renderSongs(songs, totalPages, currentPage) {
   // Pagination
   const paginationContainer = document.getElementById('pagination-container')
   paginationContainer.innerHTML = ''
-  for (let i = 1; i <= totalPages; i++) {
-    const pageElement = document.createElement('button')
-    pageElement.textContent = i
-    if (i === currentPage) {
-      pageElement.disabled = true
-    }
-    pageElement.addEventListener('click', () => {
-      // Trigger a custom event to notify the controller about the page change
-      const event = new CustomEvent('pageChange', { detail: { page: i } })
-      document.dispatchEvent(event)
-    })
-    paginationContainer.appendChild(pageElement)
+
+  const pages = new Set([1, totalPages])
+  for (let i = Math.max(1, currentPage - 1); i <= Math.min(totalPages, currentPage + 1); i++) {
+    pages.add(i)
   }
+  const sorted = [...pages].sort((a, b) => a - b)
+  const pageList = []
+  for (let i = 0; i < sorted.length; i++) {
+    if (i > 0 && sorted[i] - sorted[i - 1] > 1) pageList.push('...')
+    pageList.push(sorted[i])
+  }
+
+  pageList.forEach(page => {
+    if (page === '...') {
+      const dots = document.createElement('span')
+      dots.textContent = '...'
+      paginationContainer.appendChild(dots)
+    } else {
+      const btn = document.createElement('button')
+      btn.textContent = page
+      btn.disabled = page === currentPage
+      btn.addEventListener('click', () => {
+        document.dispatchEvent(new CustomEvent('pageChange', { detail: { page } }))
+      })
+      paginationContainer.appendChild(btn)
+    }
+  })
 
 }
