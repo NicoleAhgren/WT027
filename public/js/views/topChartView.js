@@ -57,6 +57,7 @@ const ctx = document.getElementById('chart').getContext('2d')
     document.getElementById('detail-top10').textContent = `Top 10: ${song.top10 ?? 0}x`
     document.getElementById('detail-peak').textContent = `Peak position: ${song.peakPosition ?? '-'}`
 
+    btn.dataset.id = song.id
     btn.dataset.title = song.title
     btn.dataset.artist = song.artist
     btn.dataset.streams = song.totalStreams

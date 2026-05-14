@@ -9,6 +9,7 @@ export async function initChart() {
     document.addEventListener('click', (e) => {
       if (e.target.id === 'detail-add-btn') {
         addSong({
+          id: e.target.dataset.id,
           title: e.target.dataset.title,
           artist: e.target.dataset.artist,
           totalStreams: e.target.dataset.streams,

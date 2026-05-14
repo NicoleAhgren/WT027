@@ -85,6 +85,7 @@ export async function getTopChart(limit = 20) {
       topChart(limit: $limit) {
         position
         song {
+          id
           title
           artist
           totalStreams
