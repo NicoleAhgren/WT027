@@ -1,7 +1,9 @@
 import { initSongs } from './controllers/songsController.js'
+import { initPlaylist } from './controllers/playlistController.js'
 
 const routes = {
   '#songs': initSongs,
+  '#playlist': initPlaylist
 }
 
 function navigate() {
