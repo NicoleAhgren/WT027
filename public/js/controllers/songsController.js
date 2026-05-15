@@ -9,12 +9,14 @@ export function initSongs() {
   let currentPage = 1
   let currentSearch = ''
 
+  /** Hämtar och renderar låtar för aktuell sida och sökning. */
   async function load() {
     const data = await fetchSongs(currentPage, 20, currentSearch)
     renderSongs(data.songs, data.totalPages, data.currentPage)
     setupAddButtons()
   }
 
+  /** Kopplar klickhändelser till alla lägg-till-knappar och markerar redan tillagda låtar. */
   function setupAddButtons() {
     const playlist = getPlaylist()
     document.querySelectorAll('.add-btn').forEach(button => {

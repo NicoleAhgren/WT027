@@ -32,12 +32,14 @@ export function renderSongs(songs, totalPages, currentPage) {
   const paginationContainer = document.getElementById('pagination-container')
   paginationContainer.innerHTML = ''
 
+  // Visa alltid första och sista sidan, plus ett fönster av sidor runt aktuell sida
   const pages = new Set([1, totalPages])
   for (let i = Math.max(1, currentPage - 1); i <= Math.min(totalPages, currentPage + 1); i++) {
     pages.add(i)
   }
   const sorted = [...pages].sort((a, b) => a - b)
   const pageList = []
+  // Lägg till "..." där det finns hopp i sidnumren
   for (let i = 0; i < sorted.length; i++) {
     if (i > 0 && sorted[i] - sorted[i - 1] > 1) pageList.push('...')
     pageList.push(sorted[i])

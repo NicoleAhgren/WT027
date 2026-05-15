@@ -51,6 +51,7 @@ const ctx = document.getElementById('chart').getContext('2d')
     }
   })
 
+  /** Visar detaljpanelen för en vald låt och markerar knappen om låten redan finns i spellistan. */
   function showDetail(song) {
     const panel = document.getElementById('song-detail')
     const btn = document.getElementById('detail-add-btn')
