@@ -1,7 +1,18 @@
 import { getPlaylist, deleteSong, updateSong } from '../models/playlistModel.js'
 import { renderPlaylist } from '../views/playlistView.js'
 
-export function initPlaylist() {
+export async function initPlaylist() {
+
+  const res = await fetch('/auth/user')
+
+  if (!res.ok) {
+    document.querySelector('#app').innerHTML = `
+      <p>You need to log in to create and manage your playlist.</p>
+      <a href="/auth/github" id="github-login-btn">Login with GitHub</a>
+    `
+    return
+  }
+
   const playlist = getPlaylist()
   renderPlaylist(playlist)
 
