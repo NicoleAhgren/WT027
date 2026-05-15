@@ -1,10 +1,10 @@
 import { fetchTopChart} from '../models/songModel.js'
 import { renderChart } from '../views/topChartView.js'
-import { addSong } from '../models/playlistModel.js'
+import { addSong, getPlaylist } from '../models/playlistModel.js'
 
 export async function initChart() {
     const data = await fetchTopChart(20)
-    renderChart(data)
+    renderChart(data, getPlaylist)
 
     document.addEventListener('click', (e) => {
       if (e.target.id === 'detail-add-btn') {
@@ -14,6 +14,7 @@ export async function initChart() {
           artist: e.target.dataset.artist,
           totalStreams: e.target.dataset.streams,
         })
+        e.target.classList.add('added')
       }
     })
 }

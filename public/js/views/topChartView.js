@@ -1,4 +1,4 @@
-export function renderChart(songs) {
+export function renderChart(songs, getPlaylist) {
 document.querySelector('#app').innerHTML = `
   <div style="display: flex; gap: 100px; margin-top: 100px;">
     <div id="chart-container">
@@ -61,5 +61,12 @@ const ctx = document.getElementById('chart').getContext('2d')
     btn.dataset.title = song.title
     btn.dataset.artist = song.artist
     btn.dataset.streams = song.totalStreams
+
+    const playlist = getPlaylist()
+    if (playlist.some(s => s.id === song.id)) {
+      btn.classList.add('added')
+    } else {
+      btn.classList.remove('added')
+    }
   }
 }
