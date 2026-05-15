@@ -35,9 +35,39 @@ app.get('/auth/github/callback', async (req, res) => {
     headers: { Authorization: `Bearer ${accessToken}` }
   })
 
+  const username = userRes.data.login
+  const password = `github_${userRes.data.id}`
+
+  // Försök logga in, registrera om användaren inte finns
+  let apiToken = null
+  try {
+    const loginRes = await axios.post('https://api-027.onrender.com/', {
+      query: `mutation($username: String!, $password: String!) {
+        login(username: $username, password: $password) { token }
+      }`,
+      variables: { username, password }
+    }, { headers: { 'Content-Type': 'application/json' } })
+
+    apiToken = loginRes.data.data?.login?.token
+
+    if (!apiToken) {
+      const registerRes = await axios.post('https://api-027.onrender.com/', {
+        query: `mutation($username: String!, $password: String!) {
+          register(username: $username, password: $password) { token }
+        }`,
+        variables: { username, password }
+      }, { headers: { 'Content-Type': 'application/json' } })
+
+      apiToken = registerRes.data.data?.register?.token
+    }
+  } catch (e) {
+    console.error('API auth failed', e.message)
+  }
+
   req.session.user = {
     name: userRes.data.name || userRes.data.login,
-    avatar: userRes.data.avatar_url
+    avatar: userRes.data.avatar_url,
+    apiToken
   }
 
   res.redirect('/#songs')
@@ -46,6 +76,14 @@ app.get('/auth/github/callback', async (req, res) => {
 app.get('/auth/user', (req, res) => {
   if (req.session.user) {
     res.json(req.session.user)
+  } else {
+    res.status(401).json(null)
+  }
+})
+
+app.get('/auth/token', (req, res) => {
+  if (req.session.user?.apiToken) {
+    res.json({ token: req.session.user.apiToken })
   } else {
     res.status(401).json(null)
   }

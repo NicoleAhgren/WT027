@@ -1,5 +1,21 @@
 const API_URL = 'https://api-027.onrender.com/'
 
+let cachedToken = null
+
+/**
+ * Hämtar JWT från servern och cachar den för efterföljande anrop.
+ * @returns {Promise<string|null>} JWT-token eller null om ej inloggad
+ */
+async function getToken() {
+  if (cachedToken) return cachedToken
+  const res = await fetch('/auth/token')
+  if (res.ok) {
+    const data = await res.json()
+    cachedToken = data.token
+  }
+  return cachedToken
+}
+
 /**
  * Skickar en GraphQL-förfrågan till API:et.
  * @param {string} queryString - GraphQL-frågan
@@ -7,11 +23,13 @@ const API_URL = 'https://api-027.onrender.com/'
  * @returns {Promise<Object>} Svarsdatan från API:et
  */
 export async function query(queryString, variables = {}) {
+  const token = await getToken()
+  const headers = { 'Content-Type': 'application/json' }
+  if (token) headers['Authorization'] = `Bearer ${token}`
+
   const response = await fetch(API_URL, {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
+    headers,
     body: JSON.stringify({
       query: queryString,
       variables: variables,
@@ -19,7 +37,7 @@ export async function query(queryString, variables = {}) {
   })
   const { data, errors } = await response.json()
   if (errors) throw new Error(errors[0].message)
-    return data
+  return data
 }
 
 /**
