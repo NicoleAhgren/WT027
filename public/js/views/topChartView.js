@@ -1,6 +1,6 @@
 export function renderChart(songs) {
 document.querySelector('#app').innerHTML = `
-  <div style="display: flex; gap: 20px;">
+  <div style="display: flex; gap: 100px; margin-top: 100px;">
     <div id="chart-container">
       <canvas id="chart"></canvas>
     </div>
@@ -24,10 +24,10 @@ const ctx = document.getElementById('chart').getContext('2d')
       datasets: [{
         label: 'Total Streams',
         data: songs.map(s => s.song.totalStreams),
-        backgroundColor: 'rgba(75, 192, 192, 0.2)',
-        borderColor: 'rgba(75, 192, 192, 1)',
+        backgroundColor: '#f9741680',
+        borderColor: '#F97316',
         borderWidth: 1,
-        hoverBackgroundColor: 'rgba(255, 99, 132, 0.2)',
+        hoverBackgroundColor: ' #7c3aed63',
       }]
     },
     options: {

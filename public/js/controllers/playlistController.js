@@ -7,8 +7,10 @@ export async function initPlaylist() {
 
   if (!res.ok) {
     document.querySelector('#app').innerHTML = `
-      <p>You need to log in to create and manage your playlist.</p>
-      <a href="/auth/github" id="github-login-btn">Login with GitHub</a>
+      <div id="login-container">
+        <p>You need to log in to create and manage your playlist.</p>
+        <a href="/auth/github" id="github-login-btn">Login with GitHub</a>
+      </div>
     `
     return
   }

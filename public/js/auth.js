@@ -3,8 +3,8 @@ async function checkAuth() {
   if (response.ok) {
     const user = await response.json()
     document.querySelector('#user-info').innerHTML = `
-      <img src="${user.avatar}" alt="Avatar" width="30" height="30">
-      <span>${user.name}</span>
+    <span>${user.name}</span>
+      <img src="${user.avatar}" alt="Avatar" width="35" height="35">
       <a href="/auth/logout" id="logout-btn">Logout</a>
     `
   } else {

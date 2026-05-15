@@ -2,7 +2,7 @@ export function renderSongs(songs, totalPages, currentPage) {
   document.querySelector('#app').innerHTML = `
     <div id="search-bar">
       <input type="text" id="search-input" placeholder="Search songs or artists...">
-      <button id="search-btn">🔍</button>
+      <button id="search-btn"><img src="images/search-icon.png" alt="🔍" class="search-icon" onerror="this.style.display='none';this.parentElement.textContent='🔍'"></button>
     </div>
     <div id="songs-container"></div>
     <div id="pagination-container"></div>
