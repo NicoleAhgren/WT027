@@ -1,5 +1,11 @@
 const API_URL = 'https://api-027.onrender.com/'
 
+/**
+ * Skickar en GraphQL-förfrågan till API:et.
+ * @param {string} queryString - GraphQL-frågan
+ * @param {Object} variables - Variabler till frågan
+ * @returns {Promise<Object>} Svarsdatan från API:et
+ */
 export async function query(queryString, variables = {}) {
   const response = await fetch(API_URL, {
     method: "POST",
@@ -16,6 +22,13 @@ export async function query(queryString, variables = {}) {
     return data
 }
 
+/**
+ * Hämtar en paginerad lista med låtar.
+ * @param {number} page - Sidnummer
+ * @param {number} limit - Antal låtar per sida
+ * @param {string} search - Sökterm för filtrering
+ * @returns {Promise<Object>} Objekt med songs, totalPages och currentPage
+ */
 export async function getSongs(page = 1, limit = 20, search = "") {
   const data = await query(`
     query($page: Int, $limit: Int, $search: String) {
@@ -35,6 +48,11 @@ export async function getSongs(page = 1, limit = 20, search = "") {
   return data.songs
 }
 
+/**
+ * Hämtar en specifik låt med dess ID.
+ * @param {string} id - Låtens ID
+ * @returns {Promise<Object>} Låtobjekt
+ */
 export async function getSongById(id) {
   const data = await query(`
     query($id: ID!) {
@@ -49,6 +67,12 @@ export async function getSongById(id) {
   return data.song
 }
 
+/**
+ * Hämtar en paginerad lista med artister.
+ * @param {number} page - Sidnummer
+ * @param {number} limit - Antal artister per sida
+ * @returns {Promise<Array>} Lista med artistobjekt
+ */
 export async function getArtists(page = 1, limit = 20 ) {
   const data = await query(`
     query($page: Int, $limit: Int) {
@@ -61,6 +85,11 @@ export async function getArtists(page = 1, limit = 20 ) {
   return data.artists
 }
 
+/**
+ * Hämtar en specifik artist med dess namn.
+ * @param {string} name - Artistens namn
+ * @returns {Promise<Object>} Artistobjekt med låtar och statistik
+ */
 export async function getArtistByName(name) {
   const data = await query(`
     query($name: String!) {
@@ -79,6 +108,11 @@ export async function getArtistByName(name) {
   return data.artist
 }
 
+/**
+ * Hämtar topplistan med de mest streamade låtarna.
+ * @param {number} limit - Antal låtar att hämta
+ * @returns {Promise<Array>} Lista med ChartEntry-objekt (position + song)
+ */
 export async function getTopChart(limit = 20) {
   const data = await query(`
     query($limit: Int) {

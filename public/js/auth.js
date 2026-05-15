@@ -1,3 +1,7 @@
+/**
+ * Kontrollerar om användaren är inloggad och uppdaterar navbaren.
+ * Visar namn, avatar och logout-knapp om inloggad, annars login-knapp.
+ */
 async function checkAuth() {
   const response = await fetch('/auth/user')
   if (response.ok) {

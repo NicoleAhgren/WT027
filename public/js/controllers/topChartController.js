@@ -2,6 +2,9 @@ import { fetchTopChart} from '../models/songModel.js'
 import { renderChart } from '../views/topChartView.js'
 import { addSong, getPlaylist } from '../models/playlistModel.js'
 
+/**
+ * Initierar toppchart-sidan med stapeldiagram och lägg-till-funktion.
+ */
 export async function initChart() {
     const data = await fetchTopChart(20)
     renderChart(data, getPlaylist)

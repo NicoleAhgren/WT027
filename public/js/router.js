@@ -8,6 +8,9 @@ const routes = {
   '#topChart': initChart,
 }
 
+/**
+ * Navigerar till rätt vy baserat på URL-hashens värde.
+ */
 function navigate() {
   const hash = window.location.hash || '#songs'
   const route = routes[hash]

@@ -2,6 +2,9 @@ import { fetchSongs } from '../models/songModel.js'
 import { renderSongs } from '../views/songsView.js'
 import { addSong, getPlaylist } from '../models/playlistModel.js'
 
+/**
+ * Initierar låtsidan med sökning, paginering och lägg-till-knappar.
+ */
 export function initSongs() {
   let currentPage = 1
   let currentSearch = ''

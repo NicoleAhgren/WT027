@@ -1,3 +1,7 @@
+/**
+ * Renderar spellistan med favoritknapp och raderingsknapp för varje låt.
+ * @param {Array} playlist - Lista med låtobjekt från localStorage
+ */
 export function renderPlaylist(playlist) {
   const container = document.querySelector('#app')
 

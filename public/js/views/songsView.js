@@ -1,3 +1,9 @@
+/**
+ * Renderar låtkort, sökfält och paginering.
+ * @param {Array} songs - Lista med låtobjekt
+ * @param {number} totalPages - Totalt antal sidor
+ * @param {number} currentPage - Aktuell sida
+ */
 export function renderSongs(songs, totalPages, currentPage) {
   document.querySelector('#app').innerHTML = `
     <div id="search-bar">

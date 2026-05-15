@@ -1,6 +1,9 @@
 import { getPlaylist, deleteSong, updateSong } from '../models/playlistModel.js'
 import { renderPlaylist } from '../views/playlistView.js'
 
+/**
+ * Initierar spellistan. Visar inloggningsuppmaning om användaren inte är inloggad.
+ */
 export async function initPlaylist() {
 
   const res = await fetch('/auth/user')

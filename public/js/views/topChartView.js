@@ -1,3 +1,8 @@
+/**
+ * Renderar ett stapeldiagram med topplistan och en detaljpanel vid klick.
+ * @param {Array} songs - Lista med ChartEntry-objekt
+ * @param {Function} getPlaylist - Funktion som returnerar aktuell spellista
+ */
 export function renderChart(songs, getPlaylist) {
 document.querySelector('#app').innerHTML = `
   <div style="display: flex; gap: 100px; margin-top: 100px;">
