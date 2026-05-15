@@ -11,6 +11,7 @@ export function initSongs() {
 
   /** Hämtar och renderar låtar för aktuell sida och sökning. */
   async function load() {
+    document.querySelector('#app').innerHTML = '<div id="loading">Loading...</div>'
     const data = await fetchSongs(currentPage, 20, currentSearch)
     renderSongs(data.songs, data.totalPages, data.currentPage)
     setupAddButtons()
