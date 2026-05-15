@@ -1,6 +1,6 @@
 import { fetchSongs } from '../models/songModel.js'
 import { renderSongs } from '../views/songsView.js'
-import { addSong } from '../models/playlistModel.js'
+import { addSong, getPlaylist } from '../models/playlistModel.js'
 
 export function initSongs() {
   let currentPage = 1
@@ -13,14 +13,18 @@ export function initSongs() {
   }
 
   function setupAddButtons() {
+    const playlist = getPlaylist()
     document.querySelectorAll('.add-btn').forEach(button => {
+      const songId = button.getAttribute('data-id')
+      if (playlist.some(s => s.id === songId)) {
+        button.classList.add('added')
+      }
       button.addEventListener('click', () => {
-        const songId = button.getAttribute('data-id')
         const songTitle = button.getAttribute('data-title')
         const songArtist = button.getAttribute('data-artist')
         const songStreams = button.getAttribute('data-streams')
-
         addSong({ id: songId, title: songTitle, artist: songArtist, totalStreams: songStreams })
+        button.classList.add('added')
       })
     })
   }
