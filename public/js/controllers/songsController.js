@@ -14,7 +14,7 @@ export function initSongs() {
     document.querySelector('#app').innerHTML = '<div id="loading">Loading...</div>'
     const [data, authRes] = await Promise.all([
       fetchSongs(currentPage, 20, currentSearch),
-      fetch('/auth/user')
+      fetch('/auth/user', { cache: 'no-cache' })
     ])
     renderSongs(data.songs, data.totalPages, data.currentPage)
     setupAddButtons(authRes.ok)
