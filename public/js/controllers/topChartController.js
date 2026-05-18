@@ -10,8 +10,10 @@ export async function initChart() {
     const data = await fetchTopChart(20)
     renderChart(data, getPlaylist)
 
-    document.addEventListener('click', (e) => {
+    document.addEventListener('click', async (e) => {
       if (e.target.id === 'detail-add-btn') {
+        const res = await fetch('/auth/user')
+        if (!res.ok) return window.location.hash = '#playlist'
         addSong({
           id: e.target.dataset.id,
           title: e.target.dataset.title,
@@ -21,4 +23,4 @@ export async function initChart() {
         e.target.classList.add('added')
       }
     })
-}
+  }
