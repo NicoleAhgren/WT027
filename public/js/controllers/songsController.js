@@ -12,20 +12,24 @@ export function initSongs() {
   /** Hämtar och renderar låtar för aktuell sida och sökning. */
   async function load() {
     document.querySelector('#app').innerHTML = '<div id="loading">Loading...</div>'
-    const data = await fetchSongs(currentPage, 20, currentSearch)
+    const [data, authRes] = await Promise.all([
+      fetchSongs(currentPage, 20, currentSearch),
+      fetch('/auth/user')
+    ])
     renderSongs(data.songs, data.totalPages, data.currentPage)
-    setupAddButtons()
+    setupAddButtons(authRes.ok)
   }
 
   /** Kopplar klickhändelser till alla lägg-till-knappar och markerar redan tillagda låtar. */
-  function setupAddButtons() {
-    const playlist = getPlaylist()
+  function setupAddButtons(isLoggedIn) {
+    const playlist = isLoggedIn ? getPlaylist() : []
     document.querySelectorAll('.add-btn').forEach(button => {
       const songId = button.getAttribute('data-id')
       if (playlist.some(s => s.id === songId)) {
         button.classList.add('added')
       }
       button.addEventListener('click', () => {
+        if (!isLoggedIn) return window.location.hash = '#playlist'
         const songTitle = button.getAttribute('data-title')
         const songArtist = button.getAttribute('data-artist')
         const songStreams = button.getAttribute('data-streams')
